@@ -1,0 +1,194 @@
+<template>
+    <div class="login">
+        <div class="title_img">
+            <img src="../../assets/images/ic_tishi@2x.png">
+            <span>请确认您的报名信息，提交后无法修改</span>
+        </div>
+        <div id="content">
+            <div class="img_semicircle">
+                <img src="../../assets/images/img_querenxinx@2x.png">
+            </div>
+            <div class="account">
+                <label>姓名:</label>
+                <span>{{userName}}</span>
+            </div>
+            <div class="account">
+                <label>性别:</label>
+                <span>{{gender}}</span>                
+            </div>
+            <div class="account">
+                <label>学校:</label>
+                <span>{{school}}</span>                
+            </div>
+            <div class="account">
+                <label>专业:</label>
+                <span>{{major}}</span>                
+            </div>
+            <div class="account">
+                <label>邮箱:</label>
+                <span>2423712086@qq.com</span>                
+            </div>
+            <div class="login_button" @click="jump_to_signupSuccess">
+                <img src="../../assets/images/bt_01@2x.png">
+                <span>提交</span>
+            </div>
+            <div class="register_button" @click="jump_to_basicInformation">
+                <span>返回修改</span>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import axios from 'axios'
+import { BASE_URL } from '@/utils/config'
+export default {
+    data() {
+        return{
+            userName: "",
+            gender: "",
+            school: "" ,
+            major: "",
+            mail: ""
+        }
+    },
+    created(){
+        var userId = localStorage.getItem('userId');
+        axios.get(`${BASE_URL}/volunteer/searchVolunByUserId/${userId}`)
+        .then(response => {
+            if(response.data.success){
+                var numberOfUser = response.data.result.length;
+                var result = response.data.result[numberOfUser-1];
+                var infoValue = JSON.parse(result.infoValue);
+                this.userName = result.name;
+                this.gender = infoValue.性别;
+                this.school = infoValue.学校;
+                this.major = infoValue.专业;
+                // this.mail = result.infoValue.mail;
+                // console.log(result.infoValue);
+            }
+            else{
+                this.$vux.toast.text(response.data.msg);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    },
+    mounted(){
+        var divHeight = document.getElementById("content");
+        var screenHeight = window.screen.height;
+        divHeight.style.height = screenHeight*0.677+"px";
+  },
+    methods: {
+        jump_to_basicInformation(){
+            this.$router.push({name: "BasicInformation"});
+        },
+        jump_to_signupSuccess(){
+            // this.$router.push({name: "SignupSuccess"});
+        }
+    }
+}
+</script>
+<style lang="scss" scoped>
+.login{
+    padding: 20px 20px 0 20px;
+    text-align: center;
+}
+.title_img{
+    border: 0.5px solid #444261;
+    border-radius: 18.5px;
+    padding: 9px 16px 9px 16px;
+    margin-left: 5%;
+    margin-right: 5%;
+    img{
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+    }
+    span{
+        font-size: 14px;
+        color: #B3B0C9;
+    }
+}
+#content{
+    background: -webkit-linear-gradient(#221F54, #0C0A38); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#221F54, #0C0A38); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#221F54, #0C0A38); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#221F54, #0C0A38);
+    text-align: center;
+    padding-left: 48px;
+    padding-right: 48px;
+    margin-top: 20px;
+}
+.img_semicircle{
+    margin-bottom: 31.2px;
+   img{
+        width: 191.9px;
+        height: 72.8px;
+   }
+}
+.account{
+    display: flex;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 20px;
+    padding-bottom: 10px;
+    label{
+        color: #D2CFE3;
+        margin-right: 10px;
+    }
+    span{
+        width: 100%;
+        flex: 1;
+        text-align: left;
+        color: #837EA5;
+    }
+    input::-webkit-input-placeholder{
+        color: #837EA5;
+    }
+}
+.forgetPassword{
+    text-align: right;
+    margin-top: 13.5px;
+    span{
+        font-size: 12px;
+        color: #999999;
+    }
+}
+.login_button{
+    position: relative;
+    margin-top: 69px;
+    text-align: center;
+    img{
+        width: 170px;
+        height: 56px;
+    }
+    span{
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 18px;
+        background: -webkit-linear-gradient(#FFFFFF, #99E0ED); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(#FFFFFF, #99E0ED); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(#FFFFFF, #99E0ED); /* Firefox 3.6 - 15 */
+        background: linear-gradient(#FFFFFF, #99E0ED); 
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+.register_button{
+    width: 100%;
+    height: 36px;
+    margin-top: 38px;
+    background: -webkit-radial-gradient(center,#171545, #161444); /* Safari 5.1 - 6.0 */
+    background: -o-radial-gradient(center,#171545, #161444); /* Opera 11.6 - 12.0 */
+    background: -moz-radial-gradient(center,#171545, #161444); /* Firefox 3.6 - 15 */
+    background: radial-gradient(center,#171545, #161444); /* 标准的语法 */
+    span{
+        color: rgba(210,207,227,0.48);
+        font-size: 14px;
+        line-height: 36px;
+    }
+}
+</style>

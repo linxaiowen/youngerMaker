@@ -1,0 +1,89 @@
+<template>
+    <div class="index">
+        <x-header title="亚布力论坛"></x-header>
+        <div class="scroll-container">           
+            <img src="@/assets/images/image.png">
+            <img src="@/assets/images/image2.png">
+            <img src="@/assets/images/image.png">
+            <img src="@/assets/images/image2.png">            
+        </div>
+        <div class="button-group">
+            <button @click="jumpV">志愿者详情</button>
+            <button @click="jumpA">其他活动</button>
+        </div>
+    </div>
+</template>
+<script>
+import Header from "@/components/Header"
+export default {
+    components: {
+        'x-header':Header,
+    },
+    data () {
+        return {
+            msg: "Welcom to linxiaowen's world",
+        }
+    },
+    created() {
+    },
+    mounted(){
+        var aImg=document.getElementsByTagName('img');
+        var screenHeight = window.screen.height;
+        for(var i=0;i<aImg.length;i++){
+            aImg[i].setAttribute("height",screenHeight);
+        }
+    },
+    methods:{
+        jumpV(){
+            this.$router.push({ name: 'basicInformation' });
+        },
+        jumpA(){
+            this.$router.push({ name: 'listOfActivities' });
+        }
+    }
+}
+</script>
+<style lang="scss" scoped>
+.index{
+    position: relative;
+    overflow: hidden;
+    .vux-header{
+        position: fixed!important;
+    }
+}
+.vux-header .vux-header-left{
+    display: none!important;
+}
+.scroll-container{
+    position: relative;
+    width: 100%;
+    height: auto;
+    z-index: -1;
+    overflow: scroll;
+}
+.scroll-container img{
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+.button-group{
+    width: 100%;
+    text-align: center;
+    left: 0;
+    bottom: 10.3%;
+    position: fixed;
+    z-index: 100;
+}
+.button-group button{
+    background-color: white;
+    border: none;
+    width: 140px;
+    height: 35px;
+    margin-top: 533px;
+}
+button:nth-child(1){
+    margin-right: 25px;
+}
+</style>
+

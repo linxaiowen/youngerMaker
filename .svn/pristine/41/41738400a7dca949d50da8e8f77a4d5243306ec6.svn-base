@@ -1,0 +1,111 @@
+<template>
+    <div class="detailList">
+        <x-header title="活动详情"></x-header>
+        <div class="detailContent">
+            <div class="detailTitle">2018残障青年“伙伴”宣讲会</div>
+            <div>
+                <span>活动时间:</span>
+                <span>2018-05-05</span>
+            </div>
+            <div>
+                <span>活动地点:</span>
+                <span>广州第二少年宫(广州市天河区华就路273路)</span>
+            </div>
+            <div class="scroll-container" ref="swiperScroll">
+                <div class="scroll-wrapper">
+                    <p>项目以平等、尊重、发展为核心理念，以参与式工作坊、艺术探索、陪伴成长和小组行动等为活动方式，提高障碍群体的自身认同感和社群认同感，打破身体和思想的限制；开拓视野，了解残障社群；关注公益行动和社会创新，激发为社群发声的热情，成为解决社群问题和支持社群成长力量</p>
+                    <p>协力营是由石家庄爱心互动残健互助协会主办，面向残障人士的赋能发展项目。该项目以平等、尊重、发展为核心理念，以参与式工作坊、艺术探索、陪伴成长和小组行动等为主要活动方式，提高障碍群体的自身认同感和社群认同感，打破身体和思想的限制；开拓视野，了解残障社群；关注公益行动和社会创新，激发为社群发声的热情，成为解决社群问题和支持社群成长的力量。</p>
+                    <p>协力营是由石家庄爱心互动残健互助协会主办，面向残障人士的赋能发展项目。该项目以平等、尊重、发展为核心理念，以参与式工作坊、艺术探索、陪伴成长和小组行动等为主要活动方式，提高障碍群体的自身认同感和社群认同感，打破身体和思想的限制；开拓视野，了解残障社群；关注公益行动和社会创新，激发为社群发声的热情，成为解决社群问题和支持社群成长的力量。项目以平等、尊重、发展为核心理念，以参与式工作坊、艺术探索、陪伴成长和小组行动等为活动方式，提高障碍群体的自身认同感和社群认同感，打破身体和思想的限制；开拓视野，了解残障社群；关注公益行动和社会创新，激发为社群发声的热情，成为解决社群问题和支持社群成长力量</p>
+                    <p>协力营是由石家庄爱心互动残健互助协会主办，面向残障人士的赋能发展项目。该项目以平等、尊重、发展为核心理念，以参与式工作坊、艺术探索、陪伴成长和小组行动等为主要活动方式，提高障</p>
+                </div>
+            </div>
+        </div>
+        <div class="detailFooter">
+            <button @click="jump">我要报名</button>
+        </div>
+    </div>
+</template>
+<script>
+import axios from 'axios'
+import Header from "@/components/Header"
+import BScroll from 'better-scroll'
+export default {
+    components: {
+        'x-header': Header,
+    },
+    created() {
+        axios.get('http://103.229.213.219:8086/yabuli/activity/searchActivityInfo/2')
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    },
+    mounted(){
+        var lImg = document.getElementsByClassName("detailList");
+        var screenHeight = window.screen.height;
+        lImg[0].style.height = screenHeight+"px";
+    },
+    methods: {
+        jump(){
+            this.$router.push({name:"activityRegistration"});
+        }
+    }
+}
+</script>
+<style lang="scss" scoped>
+.detailList{
+    background-image: url("../../assets/images/eventDetail.png");
+    background-size: cover;
+    color: white;
+    position: relative;
+}
+.detailList img{
+    width: 100%;
+    z-index: -1;
+}
+.detailContent{
+    padding-left: 18px;
+    padding-right: 18px;
+}
+.detailTitle{
+    text-align: center;
+    font-size: 20px;
+    padding-top: 78px;
+    padding-bottom: 24px;
+}
+div>span,p{
+    font-size: 13px;
+}
+span:nth-child(2){
+    margin-left: 5px;
+}
+.scroll-container{
+    height: 385px;
+    width: 100%;
+    overflow: scroll;
+    .scroll-wrapper{
+        height: 500px;
+    }
+}
+.detailFooter{
+    width: 100%;
+    height: 76px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    text-align: center;
+    button{
+        width: 339px;
+        height: 40px;
+        margin-top: 18px;
+        background-color: #FFAD5D;
+        color: white;
+        font-size: 18px;
+        border-radius: 10px;
+        outline: none;
+    }
+}
+</style>

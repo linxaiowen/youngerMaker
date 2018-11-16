@@ -1,0 +1,243 @@
+<template>
+    <div class="login">
+        <div class="title">
+            <div class="title_left">
+                <div class="label">
+                    <span>1/10</span>
+                </div>
+                <div class="littlePoint">
+                    <div v-for="item in 10"></div>
+                </div>
+            </div>
+            <div class="title_right">
+                <img>
+                <span>30:00</span>
+            </div>
+        </div>
+        <div id="content">
+            <div class="img_semicircle">
+                <img class="zhongzi" src="../../assets/images/ic_da01@2x.png">  
+                <img class="img_quan" src="../../assets/images/img_quan@2x.png">                  
+            </div>    
+            <div class="question_content">
+                <div class="left_arrow">
+                    <img src="../../assets/images/ic_shang@2x.png"> 
+                </div>
+                <div class="middle_span">
+                    <span>只有在粉丝投票中获得第一名的练习生，才能C位出道。现在，练习生小干C位出道了，可见他在粉丝投票中得到了第一名。下述推理结构哪个与上述推理在形式上是相同的？</span>
+                </div>
+                <div class="right_arrow">
+                    <img src="../../assets/images/ic_xia@2x.png"> 
+                </div>
+            </div>
+            <div class="options">
+                <div class="four_choices">
+                    <div class="choice_style">
+                        <span>A</span>
+                    </div>
+                    <span class="question_span">如果物体间发生摩擦就会生热，现在已经发生了摩擦，所以物体必然要生热。</span>
+                </div>
+                <div class="four_choices">
+                    <div class="choice_style">
+                        <span>B</span>
+                    </div>
+                    <span class="question_span">只有身高超过1米9的人，才能入选国家队。大白入选了国家队，他身高一定超过1米9。</span>
+                </div>
+                <div class="four_choices">
+                    <div class="choice_style">
+                        <span>C</span>
+                    </div>
+                    <span class="question_span">孕妇都有休产假的权利。阿狗是孕妇，因此，她有休产假的权利。</span>
+                </div>
+                <div class="four_choices">
+                    <div class="choice_style">
+                        <span>D</span>
+                    </div>
+                    <span class="question_span">只有专业课上90分，才能申请奖学金。亚亚专业课没上90分，所以她不能申请奖学金。</span>
+                </div>
+            </div>
+            <div class="login_button" @click="jump_to_signupSuccess">
+                <img src="../../assets/images/bt_01@2x.png">
+                <span>下一题</span>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    mounted(){
+        var divHeight = document.getElementById("content");
+        var screenHeight = window.screen.height;
+        divHeight.style.height = screenHeight*0.677+"px";
+  },
+  methods: {
+      jump_to_basicInformation(){
+          this.$router.push({name: "BasicInformation"});
+      },
+      jump_to_signupSuccess(){
+          this.$router.push({name: "SignupSuccess"});
+      }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.login{
+    padding: 20px 20px 0 20px;
+}
+.title{
+    height: 37px;
+    position: relative;
+}
+.title_left{
+    position: relative;
+    .label{
+        text-align: left;
+        span{
+            font-size: 30px;
+            color: #FFFFFF;
+        }
+    }
+    .littlePoint{
+        overflow: hidden;
+        position: absolute;
+        top: 18px;
+        left: 80px;
+        div{
+            width: 2px;
+            height: 4px;
+            background-color: #62F2FB;
+            margin-left: 2px;
+            float: left;
+        }       
+    }
+    zoom: 1;
+}
+.title_right{
+    width: 118px;
+    height: 37px;
+    position: absolute;
+    line-height: 37px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #121044;
+    span{
+        color: #43FFF3;
+        font-size: 18px;
+    }
+}
+#content{
+    background: -webkit-linear-gradient(#221F54, #0C0A38); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#221F54, #0C0A38); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#221F54, #0C0A38); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#221F54, #0C0A38);
+    margin-top: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+.img_semicircle{
+    height: 38px;
+    position: relative;
+    .zhongzi{
+        width: 72px;
+        height: 72px;
+        border: 2px solid #2A275A;
+        border-radius: 50%;
+        background-color: #040836;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -100%;
+    }
+    .img_quan{
+        width: 166px;
+        height: 88px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0.31;
+    }
+}
+.question_content{
+    margin: 0 11px 19px 11px;
+    background-color: rgba(132,127,166,0.1);
+    .left_arrow{
+        text-align: left;
+        height: 16px;
+        img{
+            width: 16px;
+            height: 16px;
+        }
+    }
+    .middle_span{
+        margin-left: 8px;
+        margin-right: 8px;
+        text-align: left;
+        span{
+            font-size: 14px;
+            color: #847FA6;
+        }
+    }
+    .right_arrow{
+        height: 16px;
+        text-align: right;
+        img{
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+.options{
+    color: #ABA6CC;
+    font-size: 14px;
+    .four_choices{
+        position: relative;
+        margin: 13px 15px 0 25px;
+        padding: 2px 6px 6px 33px;
+        background: -webkit-linear-gradient(left, #1E1B56 , #161444); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(right, #1E1B56, #161444); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(right, #1E1B56, #161444); /* Firefox 3.6 - 15 */
+        background: linear-gradient(to right, #1E1B56 , #161444); /* 标准的语法 */
+        .choice_style{
+            width: 30px;
+            height: 30px;
+            background-color: #121044;
+            border: 0.5px solid #393677;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            position: absolute;
+            margin-left: -13%;
+            margin-top: -2%;
+            span{
+                color: #A09BC2;
+            }
+        }
+        .question_span{
+        }
+    }
+}
+.login_button{
+    position: relative;
+    margin-top: 30px;
+    text-align: center;
+    img{
+        width: 136.6px;
+        height: 44px;
+    }
+    span{
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 18px;
+        background: -webkit-linear-gradient(#FFFFFF, #99E0ED); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(#FFFFFF, #99E0ED); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(#FFFFFF, #99E0ED); /* Firefox 3.6 - 15 */
+        background: linear-gradient(#FFFFFF, #99E0ED); 
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+</style>

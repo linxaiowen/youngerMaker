@@ -1,0 +1,136 @@
+<template>
+    <div class="questionList">
+        <div class="questionOptions">
+            <div>
+                <span>说出你的观点</span>
+                <div id="hidden"></div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import Header from "@/components/Header"
+export default {
+    data () {
+        return{
+            minutes : '5',
+            seconds : '0'
+        }
+    },
+    components: {
+        'x-header': Header,
+    },
+    created(){
+        this.CountDown();
+    },
+    methods: {
+        CountDown() {   
+            var auth_time = 5*60;
+            var auth_timetimer = setInterval(() => {
+                if(auth_time >= 0){
+                    this.minutes = Math.floor(auth_time / 60);
+                    this.seconds = Math.floor(auth_time % 60);
+                    auth_time--;
+                }
+                else{
+                    clearInterval(auth_timetimer);
+                }
+            }, 1000);
+        }
+    }
+}
+</script>
+<style lang="scss" scoped>
+.questionList{
+    padding-left: 18px;
+    padding-right: 18px;
+}
+.countDown{
+    margin-top: 70px;
+    // width: 138px;
+    height: 35px;
+    text-align: right;
+    span{
+        font-size: 13px;
+        color: #000000;
+    }
+}
+.questionContent {
+    margin-top: 47px;
+    position: relative;
+    div{
+        width: 87px;
+        height: 32px;
+        background-color: white;
+        border: 1px solid #797979;
+        border-radius: 20px;
+        text-align: center;
+        position: absolute;
+        left: 50%;
+        top: -10%;
+        -webkit-transform: translate(-50%);
+        span{
+            line-height: 32px;
+        }
+    }
+    img{
+        width: 100%;
+        height: auto;
+    }
+    .quesstionTitle{
+        width: 300px;
+        height: 100px;
+        position: absolute;
+        border: none;
+        top: 15%;
+        overflow: hidden;
+        text-align: left;
+    }
+}
+.questionOptions{
+    div{
+        position: relative;
+        width: 100%;
+        height: 151px;
+        border: 1px solid #797979;
+        margin-top: 20px;
+        text-align: left;
+        z-index: 100;
+        // background-color: #D7D7D7;
+        span{
+            line-height: 35px;
+            font-size: 13px;
+            color: #CFCFD2;
+            padding-left: 5px;
+        }
+    }
+}
+#hidden{
+    position: absolute;
+    margin: 0;
+    height:153px;
+    width: 100%;
+    top: 0;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    z-index: -1;
+    background-color: transparent;
+}
+.questionFooter{
+    position: relative;
+    margin-top: 66px;
+    .rightArrow{
+        float: right;
+    }
+    .leftSpan{
+        position: absolute;
+        left: 12%;
+        top: 25%;
+    }
+    .rightSpan{
+        position: absolute;
+        right: 12%;
+        top: 25%;
+    }
+}
+</style>

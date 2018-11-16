@@ -1,0 +1,121 @@
+<template>
+    <div class="page">
+        <x-header title="活动列表"></x-header>
+        <div class="img-group">
+            <div @click="jumpA">
+                <img src="@/assets/images/image3.png">
+                <span class="activityTitle">2018贫困山区救助活动</span>
+
+                <!-- 已报名标签 -->
+                <div id="activityTag">
+                    <span>已报名</span>
+                </div>
+            </div>
+            <div>
+                <img src="@/assets/images/image4.png">
+                <span class="activityTitle">2018北京大学宣讲会</span>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="footer-div1" @click="jumpI">首页</div>
+            <div class="footer-div2" @click="jumpMine">我的</div>
+        </div>
+
+        
+    </div>
+</template>
+<script>
+import axios from 'axios'
+import Header from "@/components/Header"
+export default {
+    components: {
+        'x-header': Header,
+    },
+    created(){
+         axios.post('http://103.229.213.219:8086/yabuli/api/activity/searchPageActivity', {
+            params: {
+                pageNo: 1,
+                pageSize: 1,
+                userId: 1
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    },
+    methods:{
+        jumpI(){
+            this.$router.push({name:"indexV"});
+        },
+        jumpA(){
+            this.$router.push({name:"activityDetail"});
+        },
+        jumpMine(){
+            this.$router.push({name:"mine"});
+        }
+    }
+}
+</script>
+<style lang="scss" scoped>
+
+.img-group {
+    margin-top: 40px;
+    div{
+        width: 100%;
+        height: 201px;
+        position: relative;
+        img{
+            width: 100%;
+            height: 201px;
+            position: relative;
+            z-index: -1;
+        }
+        .activityTitle{
+            position: absolute;
+            color: white;
+            margin-top: -120px;
+            margin-left: 15%;
+            font-size: 24px;
+        }
+    }
+}
+.footer{
+    margin-top: 128px;
+    margin-left: 230px;
+    div{
+        width: 40px;
+        border: 1px solid #797979;
+        font-size: 13px;
+        padding: 10px;
+        float: left;
+        color: #A1A1A1;
+        text-align: center;
+    }
+}
+.footer-div1{
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.footer-div2{
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+#activityTag{
+    background-color: white;
+    width: 60px;
+    height: 25px;
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    text-align: center;
+    span{
+        color: #000000;
+        font-size: 12px;
+    }
+}
+</style>

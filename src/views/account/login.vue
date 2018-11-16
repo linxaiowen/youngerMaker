@@ -1,0 +1,177 @@
+<template>
+    <div class="login">
+        <div class="title_img">
+            <img src="../../assets/images/banenr01@2x.png">
+        </div>
+        <div id="content">
+            <div class="account">
+                <label>账号:</label>
+                <input type="text" v-model="phoneNo" placeholder="请输入您的手机号/账号">
+            </div>
+            <div class="account">
+                <label>密码:</label>
+                <input type="password" v-model="password" placeholder="请输入您的密码">
+            </div>
+            <div class="forgetPassword" @click="jump_to_retrievePassword">
+                <span>忘记密码?</span>
+            </div>
+            <div class="login_button" @click="verifyUser">
+                <img src="../../assets/images/bt_01@2x.png">
+                <span>登录</span>
+            </div>
+            <div class="register_button" @click="jump_to_register">
+                <span>快速注册</span>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import axios from 'axios'
+import { BASE_URL } from '@/utils/config'
+export default {
+    data(){
+        return{
+            phoneNo: "",
+            password: ""
+        }
+    },
+    created(){
+    },
+    mounted(){
+        var divHeight = document.getElementById("content");
+        var screenHeight = window.screen.height;
+        divHeight.style.height = screenHeight*0.677+"px";
+    },
+    methods: {
+        jump_to_register(){
+            this.$router.push({name: "Register"});
+        },
+        jump_to_retrievePassword(){
+            this.$router.push({name: "RetrievePassword"});
+        },
+        validation(){
+            if(this.phoneNo != "" && this.password != ""){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        verifyUser(){
+            if(this.validation()){
+                axios.post(`${BASE_URL}/user/frontLogin`, {
+                    loginName: this.phoneNo,
+                    password: this.password,
+                })
+                .then(response => {
+                    // console.log(response);
+                    if(response.data.success){
+                        this.$vux.toast.text("登录成功","middle");
+                        var userId = response.data.result.id;
+                        localStorage.setItem("userId", userId);
+                    }
+                    else{
+                    this.$vux.toast.text(response.data.msg);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+                localStorage.setItem('phoneNo', this.phoneNo);
+            }
+            else{
+                alert("请将输入框填写完整");
+            }
+        }
+    }
+}
+</script>
+<style lang="scss" scoped>
+.login{
+    padding: 20px 20px 0 20px;
+    height: 100%;
+}
+.title_img{
+    img{
+        width: 100%;
+        height: 130px;
+    }
+}
+#content{
+    background: -webkit-linear-gradient(#221F54, #0C0A38); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#221F54, #0C0A38); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#221F54, #0C0A38); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#221F54, #0C0A38);
+    text-align: center;
+    padding-top: 18px;
+    padding-left: 48px;
+    padding-right: 48px;
+}
+.account{
+    display: flex;
+    font-size: 16px;
+    margin-top: 30px;
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid #42406E;
+    label{
+        color: #D2CFE3;
+        margin-right: 10px;
+    }
+    input{
+        width: 100%;
+        flex: 1;
+        font-size: 15px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        padding: 0;
+        color: #837EA5;
+    }
+    input::-webkit-input-placeholder{
+        color: #837EA5;
+    }
+}
+.forgetPassword{
+    text-align: right;
+    margin-top: 13.5px;
+    span{
+        font-size: 12px;
+        color: #999999;
+    }
+}
+.login_button{
+    position: relative;
+    margin-top: 89px;
+    text-align: center;
+    img{
+        width: 170px;
+        height: 56px;
+    }
+    span{
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 18px;
+        background: -webkit-linear-gradient(#FFFFFF, #99E0ED); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(#FFFFFF, #99E0ED); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(#FFFFFF, #99E0ED); /* Firefox 3.6 - 15 */
+        background: linear-gradient(#FFFFFF, #99E0ED); 
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+.register_button{
+    width: 100%;
+    height: 36px;
+    margin-top: 41.7px;
+    background: -webkit-radial-gradient(center,#171545, #161444); /* Safari 5.1 - 6.0 */
+    background: -o-radial-gradient(center,#171545, #161444); /* Opera 11.6 - 12.0 */
+    background: -moz-radial-gradient(center,#171545, #161444); /* Firefox 3.6 - 15 */
+    background: radial-gradient(center,#171545, #161444); /* 标准的语法 */
+    span{
+        color: rgba(210,207,227,0.48);
+        font-size: 14px;
+        line-height: 36px;
+    }
+}
+</style>

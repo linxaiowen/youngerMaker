@@ -1,0 +1,349 @@
+<template>
+    <div class="login">
+        <div class="title">
+            <div class="title_left">
+                <div class="label">
+                    <span>{{index+1}}/{{questionChoiceNum}}</span>
+                </div>
+                <div class="littlePoint">
+                    <div class="highLight" v-for="item in index+1"></div>
+                    <div class="gray" v-for="item in questionChoiceNum-index-1"></div>
+                </div>
+            </div>
+            <div class="title_right">
+                <img>
+                <span v-if="seconds<10">{{minutes}}:0{{seconds}}</span>
+                <span v-else>{{minutes}}:{{seconds}}</span>
+            </div>
+        </div>
+        <div id="content">
+            <div class="img_semicircle">
+                <img class="zhongzi" src="../../assets/images/ic_da01@2x.png">  
+                <img class="img_quan" src="../../assets/images/img_quan@2x.png">                  
+            </div>    
+            <div class="question_content">
+                <div class="left_arrow">
+                    <img src="../../assets/images/ic_shang@2x.png"> 
+                </div>
+                <div class="middle_span">
+                    <span>{{title}}</span>
+                </div>
+                <div class="right_arrow">
+                    <img src="../../assets/images/ic_xia@2x.png"> 
+                </div>
+            </div>
+            <div class="options">
+                <div @click="changeClass(index)" class="four_choices" v-for="(item,index) in contents" :key="index" v-bind:class="{'four_choices_change': index==isActive }">
+                    <div class="choice_style">
+                        <span>{{item.options}}</span>
+                    </div>
+                    <span class="question_span">{{item.content}}</span>
+                </div>
+            </div>
+            <div class="login_button" @click="jump_to_nextQuestion">
+                <img src="../../assets/images/bt_01@2x.png">
+                <span>下一题</span>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import axios from 'axios'
+import { BASE_URL } from '@/utils/config'
+export default {
+    data(){
+        return{
+            title: "",
+            questionList: [],
+            contents: [],
+            index: 0,
+            questionChoiceNum: "",
+            isActive: -1,
+            minutes : 30,
+            seconds : 0,
+            answer: "",
+            questionId: 1
+        }
+    },
+    created(){
+        this.CountDown();
+        var userId = localStorage.getItem("userId");
+        var volunteerActivityId = localStorage.getItem("activityId");
+        axios.post(`${BASE_URL}/question/searchAllQuestion`,{
+            categoryId: 1,
+            questionChoiceNum: 2,
+            questionNum: 2,
+            userId: 2,
+            volunteerActivityId: volunteerActivityId
+        })
+        .then(response => {
+            if(response.data.success){
+                this.questionList = response.data.result.newQuestionList;
+                this.title = this.questionList[this.index].title;
+                var contents = JSON.parse(this.questionList[this.index].content);
+                this.contents = contents;
+                this.questionChoiceNum = 2;
+                this.questionId = this.questionList[this.index].title;
+                // console.log(this.questionList);
+            }
+            else{
+                this.$vux.toast.text(response.data.msg);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    },
+    mounted(){
+        var divHeight = document.getElementById("content");
+        var screenHeight = window.screen.height;
+        divHeight.style.height = screenHeight*0.677+"px";
+    },
+    methods: {
+        jump_to_basicInformation(){
+            this.$router.push({name: "BasicInformation"});
+        },
+        jump_to_nextQuestion(){
+            if(this.index < 1){
+                this.index++;
+                this.title = this.questionList[this.index].title;
+                var contents = JSON.parse(this.questionList[this.index].content);
+                this.contents = contents;
+                this.questionId = this.questionList[this.index].title;
+            }
+            else{
+                this.$router.push({name: "SignupSuccess"});
+            }
+            axios.post(`${BASE_URL}/api/question/saveAnswer`,{
+                answer: this.answer,
+                questionId: this.questionId,
+                userId: 2,
+                activityId: volunteerActivityId
+            })
+            .then(response => {
+                console.log(response);
+                if(response.data.success){
+                }
+                else{
+                    this.$vux.toast.text(response.data.msg);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        changeClass(index){
+            this.isActive = index;
+            this.answer = this.contents[index].options;
+            console.log(this.answer);
+        },
+        CountDown() {   
+            var auth_time = 30*60;
+            var auth_timetimer = setInterval(() => {
+                if(auth_time >= 0){
+                    this.minutes = Math.floor(auth_time / 60);
+                    this.seconds = Math.floor(auth_time % 60);
+                    auth_time--;
+                }
+                else{
+                    clearInterval(auth_timetimer);
+                }
+            }, 1000);
+        },
+    }
+}
+</script>
+<style lang="scss" scoped>
+.login{
+    padding: 20px 20px 0 20px;
+}
+.title{
+    height: 37px;
+    position: relative;
+}
+.title_left{
+    position: relative;
+    .label{
+        text-align: left;
+        span{
+            font-size: 30px;
+            color: #FFFFFF;
+        }
+    }
+    .littlePoint{
+        overflow: hidden;
+        position: absolute;
+        top: 18px;
+        left: 80px;
+        .highLight{
+            width: 2px;
+            height: 4px;
+            background-color: #62F2FB;
+            margin-left: 2px;
+            float: left;
+        }   
+        .gray{
+            width: 2px;
+            height: 4px;
+            background-color: #2D2A5D;
+            margin-left: 2px;
+            float: left;
+        }    
+    }
+    zoom: 1;
+}
+.title_right{
+    width: 118px;
+    height: 37px;
+    position: absolute;
+    line-height: 37px;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #121044;
+    text-align: center;
+    span{
+        color: #43FFF3;
+        font-size: 18px;
+    }
+}
+#content{
+    background: -webkit-linear-gradient(#221F54, #0C0A38); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#221F54, #0C0A38); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#221F54, #0C0A38); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#221F54, #0C0A38);
+    margin-top: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+.img_semicircle{
+    height: 38px;
+    position: relative;
+    .zhongzi{
+        width: 72px;
+        height: 72px;
+        border: 2px solid #2A275A;
+        border-radius: 50%;
+        background-color: #040836;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: -100%;
+    }
+    .img_quan{
+        width: 166px;
+        height: 88px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0.31;
+    }
+}
+.question_content{
+    margin: 0 11px 19px 11px;
+    background-color: rgba(132,127,166,0.1);
+    .left_arrow{
+        text-align: left;
+        height: 16px;
+        img{
+            width: 16px;
+            height: 16px;
+        }
+    }
+    .middle_span{
+        margin-left: 8px;
+        margin-right: 8px;
+        text-align: left;
+        span{
+            font-size: 14px;
+            color: #847FA6;
+        }
+    }
+    .right_arrow{
+        height: 16px;
+        text-align: right;
+        img{
+            width: 16px;
+            height: 16px;
+        }
+    }
+}
+.options{
+    color: #ABA6CC;
+    font-size: 14px;
+    .four_choices{
+        position: relative;
+        margin: 13px 15px 0 25px;
+        padding: 2px 6px 6px 33px;
+        background: -webkit-linear-gradient(left, #1E1B56 , #161444); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(right, #1E1B56, #161444); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(right, #1E1B56, #161444); /* Firefox 3.6 - 15 */
+        background: linear-gradient(to right, #1E1B56 , #161444); /* 标准的语法 */
+        .choice_style{
+            width: 30px;
+            height: 30px;
+            background-color: #121044;
+            border: 0.5px solid #393677;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            position: absolute;
+            margin-left: -13%;
+            margin-top: -2%;
+            span{
+                color: #A09BC2;
+            }
+        }
+    }
+    .four_choices_change{
+        position: relative;
+        margin: 13px 15px 0 25px;
+        padding: 2px 6px 6px 33px;
+        background: -webkit-linear-gradient(left, #241F93 , #161444); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(right, #241F93, #161444); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(right, #241F93, #161444); /* Firefox 3.6 - 15 */
+        background: linear-gradient(to right, #241F93 , #161444); /* 标准的语法 */
+        .choice_style{
+            width: 30px;
+            height: 30px;
+            background-color: #121044;
+            border: 0.5px solid #42FAEF;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            position: absolute;
+            margin-left: -13%;
+            margin-top: -2%;
+            span{
+                color: #42FAEF;
+            }
+        }
+    }
+}
+.login_button{
+    position: absolute;
+    margin-top: 30px;
+    text-align: center;
+    width: 136.6px;
+    left: 50%;
+    transform: translate(-50%);
+    img{
+        width: 136.6px;
+        height: 44px;
+    }
+    span{
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 18px;
+        background: -webkit-linear-gradient(#FFFFFF, #99E0ED); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(#FFFFFF, #99E0ED); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(#FFFFFF, #99E0ED); /* Firefox 3.6 - 15 */
+        background: linear-gradient(#FFFFFF, #99E0ED); 
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+
+</style>

@@ -1,0 +1,141 @@
+<template>
+    <div class="uploadList">
+        <x-header title="志愿者考验"></x-header>
+        <div class="uploadHeader">
+            <span>上传资料</span>
+        </div>
+        <div class="uploadTitle">
+            <div></div>
+            <span>通过照片展示你的风采</span>
+        </div>
+        <!-- <upload
+        ref="upload"
+        :show-upload-list="false"
+        :default-file-list="defaultList"
+        :on-success="handleSuccess"
+        :format="['jpg','jpeg','png']"
+        :max-size="2048"
+        :on-format-error="handleFormatError"
+        :on-exceeded-size="handleMaxSize"
+        :before-upload="handleBeforeUpload"
+        multiple
+        type="drag"
+        action="//jsonplaceholder.typicode.com/posts/"
+        style="display: inline-block;width:58px;"> -->
+            <div class="uploadImg" @click="uploadImg">
+                <img src="../../assets/images/camera.png">
+            </div>
+        <!-- </upload> -->
+        <div class="uploadTitle">
+            <div></div>
+            <span>通过视频展示你的个性</span>
+        </div>
+        <div class="uploadVideo">
+            <img src="../../assets/images/video.png">
+        </div>
+        <div class="uploadTitle">
+            <div></div>
+            <span>更多展示信息（请发送邮件到2324712086@qq.com邮箱）</span>
+        </div>
+        <div class="uploadFooter">
+            <button @click="jump">下一步</button>
+        </div>
+    </div>
+</template>
+<script>
+import Header from "@/components/Header"
+// import upload from "iview"
+export default {
+    data(){
+        return{
+            imgData: {
+                accept: 'image/gif, image/jpeg, image/png, image/jpg',
+            }
+        }
+    },
+    components: {
+        'x-header': Header,
+    },
+    methods: {
+        jump(){
+            this.$router.push({name: "clockRules"});
+        },
+        uploadImg(event){
+            console.log(event);
+        }
+    }
+}
+</script>
+<style lang="scss" scoped>
+.uploadList{
+    padding-left: 18px;
+    padding-right: 18px;
+    // text-align: center;
+}
+.uploadHeader{
+    margin-top: 68px;
+    margin-bottom: 29px;
+    text-align: center;
+    span{
+        font-size: 20px;
+        color: #6B6B6B;
+    }
+}
+.uploadTitle{
+    div{
+        background-color: #AEAEAE;
+        width: 7px;
+        height: 20px;
+        float: left;
+    }
+    span{
+        font-size: 13px;
+        margin-left: 10px;
+        color: #000000;
+    }
+}
+.uploadImg{
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 1px solid #797979;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 34px;
+    img{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
+.uploadVideo{
+    position: relative;
+    width: 310px;
+    height: 130px;
+    border: 1px solid #797979;
+    border-radius: 10px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 18px;
+    img{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+}
+.uploadFooter{
+    margin-top: 47px;
+    text-align: center;
+    button{
+        width: 260px;
+        height: 40px;
+        background-color: #6B6B6B;
+        color: white;
+        outline: none;
+        border-radius: 10px;
+    }
+}
+</style>

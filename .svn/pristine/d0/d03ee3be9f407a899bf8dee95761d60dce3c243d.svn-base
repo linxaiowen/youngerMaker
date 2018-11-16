@@ -1,0 +1,176 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import indexP from '@/views/indexP'
+import login from '@/views/account/login'
+import register from '@/views/account/register' 
+import retrievePassword from '@/views/account/retrievePassword' 
+import registerSuccess from '@/views/account/registerSuccess' 
+import registerFailed from '@/views/account/registerFailed' 
+import basicInformation from '@/views/account/basicInformation' 
+import informationConfirm from '@/views/account/informationConfirm' 
+import signupSuccess from '@/views/account/signupSuccess' 
+
+import firstTestDescription from '@/views/firstTest/firstTestDescription' 
+import questionList from '@/views/firstTest/questionList' 
+
+import Mine from '@/views/mine/Mine'
+import MyCertificates from '@/views/mine/MyCertificates'
+
+import BasicInformation from '@/views/volunteerRegistration/BasicInformation'  
+import StartToWork from '@/views/volunteerRegistration/StartToWork'
+import QuestionList from '@/views/volunteerRegistration/QuestionList'
+import QuestionListChoice from '@/views/volunteerRegistration/QuestionListChoice'
+import QuestionListComments from '@/views/volunteerRegistration/QuestionListComments'
+import UploadInfo from '@/views/volunteerRegistration/UploadInfo'
+import ClockRules from '@/views/volunteerRegistration/ClockRules'
+import WaitForReview from '@/views/volunteerRegistration/WaitForReview'
+import VolunteerFailed from '@/views/volunteerRegistration/VolunteerFailed'
+import VolunteerSuccess from '@/views/volunteerRegistration/VolunteerSuccess'
+
+import ListOfActivities from '@/views/listOfActivities/ListOfActivities'
+import ActivityDetail from '@/views/listOfActivities/ActivityDetail'
+import ActivityRegistration from '@/views/listOfActivities/ActivityRegistration'
+import EventSuccess from '@/views/listOfActivities/EventSuccess'  
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'IndexP',
+      component: indexP
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: register
+    },
+    {
+      path: '/retrievePassword',
+      name: 'RetrievePassword',
+      component: retrievePassword
+    },
+    {
+      path: '/registerSuccess',
+      name: 'RegisterSuccess',
+      component: registerSuccess
+    },
+    {
+      path: '/registerFailed',
+      name: 'RegisterFailed',
+      component: registerFailed
+    },
+    {
+      path: '/basicInformation',
+      name: 'BasicInformation',
+      component: basicInformation
+    },
+    {
+      path: '/informationConfirm',
+      name: 'InformationConfirm',
+      component: informationConfirm
+    },
+    {
+      path: '/signupSuccess',
+      name: 'SignupSuccess',
+      component: signupSuccess
+    },
+    {
+      path: '/firstTestDescription',
+      name: 'FirstTestDescription',
+      component: firstTestDescription
+    },
+    {
+      path: '/questionList',
+      name: 'QuestionList',
+      component: questionList
+    },
+    {
+      path: '/mine',
+      name: 'mine',
+      component: Mine
+    },
+    {
+      path: '/mine/myCertificates',
+      name: 'myCertificates',
+      component: MyCertificates
+    },
+    {
+      path: '/volunteerRegistration/basicInformation',
+      name: 'basicInformation',
+      component: BasicInformation
+    },
+    {
+      path: '/volunteerRegistration/startToWork',
+      name: 'startToWork',
+      component: StartToWork
+    },
+    {
+      path: '/volunteerRegistration',
+      name: 'questionList',
+      component: QuestionList,
+      children: [
+        {
+          path: 'questionListChoice',
+          name: 'questionListChoice',
+          component: QuestionListChoice
+        },
+        {
+          path: 'questionListComments',
+          name: 'questionListComments',
+          component: QuestionListComments
+        },
+      ]
+    },
+    {
+      path: '/volunteerRegistration/uploadInfo',
+      name: 'uploadInfo',
+      component: UploadInfo
+    },
+    {
+      path: '/volunteerRegistration/clockRules',
+      name: 'clockRules',
+      component: ClockRules
+    },
+    {
+      path: '/volunteerRegistration/waitForReview',
+      name: 'waitForReview',
+      component: WaitForReview
+    },
+    {
+      path: '/volunteerRegistration/volunteerFailed',
+      name: 'volunteerFailed',
+      component: VolunteerFailed
+    },
+    {
+      path: '/volunteerRegistration/volunteerSuccess',
+      name: 'volunteerSuccess',
+      component: VolunteerSuccess
+    },
+    {
+      path: '/listOfActivities',
+      name: 'listOfActivities',
+      component: ListOfActivities,
+    },
+    {
+      path: '/listOfActivities/activityDetail',
+      name: 'activityDetail',
+      component: ActivityDetail
+    },
+    {
+      path: '/listOfActivities/activityRegistration',
+      name: 'activityRegistration',
+      component: ActivityRegistration
+    },
+    {
+      path: '/listOfActivities/eventSuccess',
+      name: 'eventSuccess',
+      component: EventSuccess
+    },
+  ]
+})

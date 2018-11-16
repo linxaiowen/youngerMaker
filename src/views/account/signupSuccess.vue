@@ -1,0 +1,104 @@
+<template>
+    <div class="registerSuccess">
+        <div class="img_quan">
+            <img src="../../assets/images/img_quan@2x.png">
+        </div>
+        <div class="img_chengg">
+            <img src="../../assets/images/img_chengg@2x.png">
+        </div>
+        <div class="registerMessage">
+            <img src="../../assets/images/registerSuccess@2x.png">
+        </div>
+        <div class="autoLogin">
+            <span>感谢您报名青春合伙人</span>
+        </div>    
+        <div class="login_button">
+            <img src="../../assets/images/bt_01@2x.png">
+            <span>开始初试</span>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    data() {
+        return{
+            progress: 0,
+        } 
+    },
+    created(){ 
+       
+    },
+    methods: { 
+        
+    } 
+}
+</script>
+<style lang="scss" scoped>
+.registerSuccess{
+    text-align: center;
+}
+.img_quan{
+    img{
+        width: 191px;
+        height: 97px;
+    }
+}
+.img_chengg{
+    margin-top: 53px;
+    img{
+        width: 185px;
+        height: 187px;
+    }
+}
+.registerMessage{
+    margin-top: 39px;
+    img{
+        width: 140px;
+        height: 35px;
+    }
+}
+.autoLogin{
+    letter-spacing: 3.73px;
+    margin-top: 15px;
+    span{
+        color: #726D95;
+        font-size: 14px;
+    }
+}
+.progressContainer{
+    height: 8px;
+    width: 100px;
+    border-radius: 6px;
+    background-color: #161449;
+    margin-top: 45px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    .progress{
+        background-color: #43FFF3;
+        border-radius: 6px;
+        height: 8px;
+    }
+}
+.login_button{
+    position: relative;
+    margin-top: 69px;
+    text-align: center;
+    img{
+        width: 170px;
+        height: 56px;
+    }
+    span{
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 18px;
+        background: -webkit-linear-gradient(#FFFFFF, #99E0ED); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(#FFFFFF, #99E0ED); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(#FFFFFF, #99E0ED); /* Firefox 3.6 - 15 */
+        background: linear-gradient(#FFFFFF, #99E0ED); 
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+</style>

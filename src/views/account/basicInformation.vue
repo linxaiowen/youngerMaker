@@ -1,0 +1,195 @@
+<template>
+    <div class="login">
+        <div class="title_img">
+            <img src="../../assets/images/banner03@2x.png">
+        </div>
+        <div id="content">
+            <!-- <div class="account" v-for="info in infoList">
+                <label>{{info}}:</label>
+                <input type="text" placeholder="请输入您的名字">
+            </div> -->
+            <div class="account">
+                <label>姓名:</label>
+                <input type="text" v-model="userName" placeholder="请输入您的名字">
+            </div>
+            <div class="account">
+                <label>性别:</label>
+                <input type="text" v-model="gender" placeholder="请输入您的性别">
+            </div>
+            <div class="account">
+                <label>学校:</label>
+                <input type="text" v-model="school" placeholder="请输入您的所在学校">
+            </div>
+            <div class="account">
+                <label>专业:</label>
+                <input type="text" v-model="major" placeholder="请输入您的所学专业">
+            </div>
+            <div class="account">
+                <label>邮箱:</label>
+                <input type="text" v-model="mail" placeholder="请输入您的常用邮箱">
+            </div>
+            <div class="login_button" @click="jump_to_iConfirm">
+                <img src="../../assets/images/bt_01@2x.png">
+                <span>提交</span>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import axios from 'axios'
+import { BASE_URL } from '@/utils/config'
+export default {
+    data(){
+        return{
+            userName: "",
+            gender: "",
+            school: "",
+            major: "",
+            mail: "",
+            infoList: []
+        }
+    },
+    created(){
+        axios.post(`${BASE_URL}/volunteerActivity/searchNowActivity`)
+        .then(response => {
+            // console.log(response);
+            if(response.data.success){
+                var infoList = response.data.result[0].infoValue.split(",");
+                // console.log(infoList);
+            }
+            else{
+                this.$vux.toast.text(response.data.msg);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    },
+    mounted(){
+        var divHeight = document.getElementById("content");
+        var screenHeight = window.screen.height;
+        divHeight.style.height = screenHeight*0.677+"px";
+    },
+    methods: {
+        validation(){
+            if(this.userName != "" && this.gender != "" && this.school != "" && this.major != "" && this.mail != ""){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        jump_to_iConfirm(){
+            var phoneNo = localStorage.getItem('phoneNo');
+            var activityId = localStorage.getItem('activityId');
+            var userId = localStorage.getItem('userId');
+            let infovalue = JSON.stringify({
+                性别: this.gender,
+                学校: this.school,
+                专业: this.major
+            })
+            if(this.validation()){
+                axios.post(`${BASE_URL}/volunteer/saveVolunteer`, {
+                    activityId: activityId,
+                    userId: userId,
+                    name: this.userName,
+                    phone: phoneNo,
+                    mail: this.mail,
+                    infoValue: infovalue
+                })
+                .then(response => {
+                    console.log(response);
+                    if(response.data.success){
+                        this.$router.push({name: "InformationConfirm"});
+                    }
+                    else{
+                        this.$vux.toast.text(response.data.msg);
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+            }
+            else{
+                alert("请将输入框填写完整");
+            }
+        },
+    }
+}
+</script>
+<style lang="scss" scoped>
+.login{
+    padding: 20px 20px 0 20px;
+    height: 100%;
+}
+.title_img{
+    img{
+        width: 100%;
+        height: 130px;
+    }
+}
+#content{
+    background: -webkit-linear-gradient(#221F54, #0C0A38); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#221F54, #0C0A38); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#221F54, #0C0A38); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#221F54, #0C0A38);
+    text-align: center;
+    padding-top: 18px;
+    padding-left: 48px;
+    padding-right: 48px;
+}
+.account{
+    display: flex;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 30px;
+    padding-bottom: 10px;
+    border-bottom: 0.5px solid #42406E;
+    label{
+        color: #D2CFE3;
+        margin-right: 10px;
+    }
+    input{
+        width: 100%;
+        flex: 1;
+        font-size: 15px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        padding: 0;
+        color: #837EA5;
+    }
+    input::-webkit-input-placeholder{
+        color: #837EA5;
+    }
+}
+.forgetPassword{
+    text-align: right;
+    margin-top: 13.5px;
+    span{
+        font-size: 12px;
+        color: #999999;
+    }
+}
+.login_button{
+    position: relative;
+    margin-top: 42px;
+    text-align: center;
+    img{
+        width: 170px;
+        height: 56px;
+    }
+    span{
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 18px;
+        background: -webkit-linear-gradient(#FFFFFF, #99E0ED); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(#FFFFFF, #99E0ED); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(#FFFFFF, #99E0ED); /* Firefox 3.6 - 15 */
+        background: linear-gradient(#FFFFFF, #99E0ED); 
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+}
+</style>

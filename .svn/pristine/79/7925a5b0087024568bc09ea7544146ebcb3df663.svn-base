@@ -1,0 +1,93 @@
+<template>
+    <div class="registerSuccess">
+        <div class="img_quan">
+            <img src="../../assets/images/img_quan@2x.png">
+        </div>
+        <div class="img_chengg">
+            <img src="../../assets/images/img_shibai@2x.png">
+        </div>
+        <div class="registerMessage">
+            <img src="../../assets/images/注册成功@2x.png">
+        </div>
+        <div class="autoLogin">
+            <span>返回注册页面中...</span>
+        </div>    
+        <div class="progressContainer">
+            <div class="progress" :style="{width:progress+'%'}">
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    data() {
+        return{
+            progress: 0,
+        } 
+    },
+    created(){ 
+        this.change(); 
+    },
+    methods: { 
+        change() { 
+            var clearInt = setInterval(() => { 
+                if(this.progress < 100){
+                    this.progress++; 
+                }
+                // console.log(this.prpBar); 
+                else { 
+                clearInterval(clearInt); 
+                } 
+            }, 20) 
+
+        } 
+    } 
+}
+</script>
+<style lang="scss" scoped>
+.registerSuccess{
+    text-align: center;
+}
+.img_quan{
+    img{
+        width: 191px;
+        height: 97px;
+    }
+}
+.img_chengg{
+    margin-top: 53px;
+    img{
+        width: 185px;
+        height: 187px;
+    }
+}
+.registerMessage{
+    margin-top: 39px;
+    img{
+        width: 140px;
+        height: 35px;
+    }
+}
+.autoLogin{
+    margin-top: 15px;
+    letter-spacing: 3.73px;
+    span{
+        color: #726D95;
+        font-size: 14px;
+    }
+}
+.progressContainer{
+    height: 8px;
+    width: 100px;
+    border-radius: 6px;
+    background-color: #161449;
+    margin-top: 45px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    .progress{
+        background-color: #EA287A;
+        border-radius: 6px;
+        height: 8px;
+    }
+}
+</style>
