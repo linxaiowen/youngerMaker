@@ -1,0 +1,120 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import index from '@/views/index'
+
+import login from '@/views/account/login'
+import register from '@/views/account/register' 
+import retrievePassword from '@/views/account/retrievePassword' 
+import registerSuccess from '@/views/account/registerSuccess' 
+import registerFailed from '@/views/account/registerFailed' 
+import basicInformation from '@/views/account/basicInformation' 
+import informationConfirm from '@/views/account/informationConfirm' 
+import signupSuccess from '@/views/account/signupSuccess' 
+
+import firstTestDescription from '@/views/firstTest/firstTestDescription' 
+import questionList from '@/views/firstTest/questionList' 
+import firstTestSuccess from '@/views/firstTest/firstTestSuccess' 
+import firstTestFailed from '@/views/firstTest/firstTestFailed' 
+import resurrection from '@/views/firstTest/resurrection' 
+import resurrectionInvitation from '@/views/firstTest/resurrectionInvitation' 
+
+import testQuestions from '@/views/testModule/testQuestions' 
+import testCompleted from '@/views/testModule/testCompleted' 
+import testResult from '@/views/testModule/testResult' 
+  
+Vue.use(Router)
+
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Index',
+      component: index
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: register
+    },
+    {
+      path: '/retrievePassword',
+      name: 'RetrievePassword',
+      component: retrievePassword
+    },
+    {
+      path: '/registerSuccess',
+      name: 'RegisterSuccess',
+      component: registerSuccess
+    },
+    {
+      path: '/registerFailed',
+      name: 'RegisterFailed',
+      component: registerFailed
+    },
+    {
+      path: '/basicInformation',
+      name: 'BasicInformation',
+      component: basicInformation
+    },
+    {
+      path: '/informationConfirm',
+      name: 'InformationConfirm',
+      component: informationConfirm
+    },
+    {
+      path: '/signupSuccess',
+      name: 'SignupSuccess',
+      component: signupSuccess
+    },
+    {
+      path: '/firstTestDescription',
+      name: 'FirstTestDescription',
+      component: firstTestDescription
+    },
+    {
+      path: '/firstTestSuccess',
+      name: 'FirstTestSuccess',
+      component: firstTestSuccess
+    },
+    {
+      path: '/firstTestFailed',
+      name: 'FirstTestFailed',
+      component: firstTestFailed
+    },
+    {
+      path: '/resurrection',
+      name: 'Resurrection',
+      component: resurrection
+    },
+    {
+      path: '/resurrectionInvitation',
+      name: 'ResurrectionInvitation',
+      component: resurrectionInvitation
+    },
+    {
+      path: '/questionList',
+      name: 'QuestionList',
+      component: questionList
+    },
+    {
+      path: '/testQuestions',
+      name: 'TestQuestions',
+      component: testQuestions
+    },
+    {
+      path: '/testCompleted',
+      name: 'TestCompleted',
+      component: testCompleted
+    },
+    {
+      path: '/testResult',
+      name: 'TestResult',
+      component: testResult
+    },
+  ]
+})
